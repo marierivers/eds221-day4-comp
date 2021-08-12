@@ -160,6 +160,6 @@ lunchtime <- function(tacos, price_per) {
 }
 lunchtime(tacos = 4, price_per = 2.5)
 is.numeric("apples")
-lunchtime(tacos = "please", price_per = 2.5)
+lunchtime(tacos = "please", price_per = 2.50)
 ```
 
