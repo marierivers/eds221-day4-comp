@@ -1,0 +1,126 @@
+---
+title: "eds221-day4-comp"
+author: "Marie Rivers"
+date: "8/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(palmerpenguins)
+```
+
+
+```{r}
+# you run 2 miles and these are your quarter mile splits in minutes
+quarter_splits <- c(1.0, 1.1, 1.2, 1.1, 1.4, 1.5, 1.6, 1.4)
+
+# write a for loop that returns your total time for any two consecutive quarter miles. Hint: the first is 1.0 + 1.1 and the second is 1.1 + 1.2
+
+
+consecutive_quarters <- vector(mode = "numeric", length = length(quarter_splits) - 1)
+
+for (i in 1:(length(quarter_splits) - 1)) {
+  halves <- quarter_splits[i] + quarter_splits[i + 1]
+  consecutive_quarters[i] <- halves
+}
+consecutive_quarters
+```
+
+## Basic function structure practice
+```{r}
+birddog_sum <- function(bird, dog) {
+  add_birddog <- bird + dog
+  return(add_birddog)
+}
+
+bird100_dog5 <- birddog_sum(bird = 100, dog = 5)
+# use `print()` for showing an output and use `return()` for storing an output
+```
+
+```{r}
+say_hello <- function(friend, weekday) {
+  print(paste("Hello,", friend, "have a great", weekday))
+}
+say_hello(friend = "Teddy", weekday = "Thursday")
+# `paste` combines things with a space between. `paste0` combines things WITHOUT a space between
+```
+
+```{r}
+# examples with conditions that prevent you from using characters
+birddog_sum2 <- function(bird2, dog2) {
+  
+  if (bird2 > 50) {
+    stop("Birds can't be greater than 50!")
+  }
+  
+  if (bird2 < 10) {
+    message("cool little bird")
+  }
+  
+  if (dog2 < 0) {
+    warning("can a dog be less than 0 pounds?")
+  }
+  add_birddog2 <- bird2 + dog2
+  return(add_birddog2)
+}
+
+bird_dog_too_small <- birddog_sum2(bird2 = 40, dog2 = -5)
+bird_little_dog <- birddog_sum2(bird2 = 9, dog2 = 5)
+bird_too_many_dog <- birddog_sum2(bird2 = 100, dog2 = 5)
+
+```
+## print vs return example
+```{r}
+find_multiple <- function(a, b) {
+  my_multiplication <- a * b
+  print(my_multiplication)
+}
+find_multiple(a = 10, b = 6)
+find_multiple(a = 10, b = 6) +12
+
+my_final_value <- find_multiple(a = 10, b = 12)
+my_final_value
+```
+
+## Functions with conditions
+```{r}
+# your function can change based on user input
+animal_age <- function(animal, age) {
+  
+  if (!animal %in% c("dog", "goat")) { # if entered animal is NOT in this vector, give this warning message. Warnings don't stop the code. Stop prevents the code from running. Think about when to use warning vs. stop
+    warning("Animal must be a dog or a goat")
+  }
+  
+  if (animal == "dog") {
+    creature_age <- age * 7
+  }
+  else if (animal == "goat") {
+    creature_age <- age * 4.7
+  }
+  return(creature_age)
+}
+
+animal_age(animal = "goat", age = 13)
+animal_age(animal = "dog", age = 2)
+animal_age(animal = "frog",  age = 4)
+```
+```{r}
+# keep species that are adelie and gentoo using the IN function
+
+adelie_gentoo <- penguins %>% # start with penguins and then...
+  filter(species %in% c("Adelie", "Gentoo"))
+  
+```
+```{r}
+# don't use == match when filtering!!!
+adelie_gentoo_wrong <- penguins %>% 
+  filter(species == c("Adelie", "Gentoo")) # this requires an exact match to the vector, so if only keeps rows with Adelie followed by Gentoo
+```
+```{r}
+# filtering useing == match and | or
+adelie_gentoo_works_ok <- penguins %>% 
+  filter(species == "Adelie" | species == "Gentoo")
+```
+
