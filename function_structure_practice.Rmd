@@ -123,4 +123,43 @@ adelie_gentoo_wrong <- penguins %>%
 adelie_gentoo_works_ok <- penguins %>% 
   filter(species == "Adelie" | species == "Gentoo")
 ```
+## Comnbine functions and for loops
+### find the mean of all columns in a data frame
+```{r}
+df_means <- function(df) {
+  for (i in 1:ncol(df)) {
+    col_mean <- mean(df[[i]], na.rm = TRUE)
+    col_name <- colnames(df[i])
+    print(paste("The mean value of", col_name, "is", col_mean))
+  }
+}
+
+df_means(df = mtcars)
+# colnames(df_name[i]) will return that columns name, where i is the column number 
+```
+
+```{r}
+# make a subset of only structural size variables from the penguins dataset for Chinstrap
+
+chinstrap_sizes <- penguins %>% 
+    filter(species == "Chinstrap") %>% # use `filter` for keeping ROWS
+  select(bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g) # use `select` for keeping COLUMNS
+
+df_means(df = chinstrap_sizes)
+
+df_means(df = penguins)
+```
+## Condition to check the class of an input
+```{r}
+lunchtime <- function(tacos, price_per) {
+  if (is.numeric(tacos) == FALSE) {
+    stop("you must input a number of tacos")
+  }
+ tot_price <- tacos * price_per
+ return(tot_price)
+}
+lunchtime(tacos = 4, price_per = 2.5)
+is.numeric("apples")
+lunchtime(tacos = "please", price_per = 2.5)
+```
 
